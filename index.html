@@ -82,136 +82,97 @@
 
 <script>
 let products = [
-  // Kola
-  { name: "Kola 2L", price: 20000, img: "images/kola.jpg", category: "ichimlik" },
-  { name: "Kola 1.5L", price: 15000, img: "images/kola.jpg", category: "ichimlik" },
-  { name: "Kola 1L", price: 12000, img: "images/kola.jpg", category: "ichimlik" },
-  { name: "Kola 0.5L", price: 8000, img: "images/kola.jpg", category: "ichimlik" },
+// Kola
+{ name: "Kola 2L", price: 20000, img: "kola.jpg", category: "ichimlik" },
+{ name: "Kola 1.5L", price: 15000, img: "kola.jpg", category: "ichimlik" },
+{ name: "Kola 1L", price: 12000, img: "kola.jpg", category: "ichimlik" },
+{ name: "Kola 0.5L", price: 8000, img: "kola.jpg", category: "ichimlik" },
 
-  // Pepsi
-  { name: "Pepsi 2L", price: 20000, img: "images/pepsi.jpg", category: "ichimlik" },
-  { name: "Pepsi 1.5L", price: 15000, img: "images/pepsi.jpg", category: "ichimlik" },
-  { name: "Pepsi 1L", price: 12000, img: "images/pepsi.jpg", category: "ichimlik" },
-  { name: "Pepsi 0.5L", price: 8000, img: "images/pepsi.jpg", category: "ichimlik" },
+// Pepsi
+{ name: "Pepsi 2L", price: 20000, img: "pepsi.jpg", category: "ichimlik" },
+{ name: "Pepsi 1.5L", price: 15000, img: "pepsi.jpg", category: "ichimlik" },
+{ name: "Pepsi 1L", price: 12000, img: "pepsi.jpg", category: "ichimlik" },
+{ name: "Pepsi 0.5L", price: 8000, img: "pepsi.jpg", category: "ichimlik" },
 
-  // Fanta
-  { name: "Fanta 2L", price: 20000, img: "images/fanta.jpg", category: "ichimlik" },
-  { name: "Fanta 1.5L", price: 15000, img: "images/fanta.jpg", category: "ichimlik" },
-  { name: "Fanta 1L", price: 12000, img: "images/fanta.jpg", category: "ichimlik" },
-  { name: "Fanta 0.5L", price: 8000, img: "images/fanta.jpg", category: "ichimlik" },
+// Fanta
+{ name: "Fanta 2L", price: 20000, img: "fanta.jpg", category: "ichimlik" },
+{ name: "Fanta 1.5L", price: 15000, img: "fanta.jpg", category: "ichimlik" },
+{ name: "Fanta 1L", price: 12000, img: "fanta.jpg", category: "ichimlik" },
+{ name: "Fanta 0.5L", price: 8000, img: "fanta.jpg", category: "ichimlik" },
 
-  // Sprite
-  { name: "Sprite 2L", price: 20000, img: "images/sprite.jpg", category: "ichimlik" },
-  { name: "Sprite 1.5L", price: 15000, img: "images/sprite.jpg", category: "ichimlik" },
-  { name: "Sprite 1L", price: 12000, img: "images/sprite.jpg", category: "ichimlik" },
-  { name: "Sprite 0.5L", price: 8000, img: "images/sprite.jpg", category: "ichimlik" },
+// Sprite
+{ name: "Sprite 2L", price: 20000, img: "sprite.jpg", category: "ichimlik" },
+{ name: "Sprite 1.5L", price: 15000, img: "sprite.jpg", category: "ichimlik" },
+{ name: "Sprite 1L", price: 12000, img: "sprite.jpg", category: "ichimlik" },
+{ name: "Sprite 0.5L", price: 8000, img: "sprite.jpg", category: "ichimlik" },
 
-  // Lipton
-  { name: "Lipton 2L", price: 20000, img: "images/lipton.jpg", category: "ichimlik" },
-  { name: "Lipton 1.5L", price: 15000, img: "images/lipton.jpg", category: "ichimlik" },
-  { name: "Lipton 1L", price: 12000, img: "images/lipton.jpg", category: "ichimlik" },
-  { name: "Lipton 0.5L", price: 8000, img: "images/lipton.jpg", category: "ichimlik" },
+// Lipton
+{ name: "Lipton 2L", price: 20000, img: "lipton.jpg", category: "ichimlik" },
+{ name: "Lipton 1.5L", price: 15000, img: "lipton.jpg", category: "ichimlik" },
+{ name: "Lipton 1L", price: 12000, img: "lipton.jpg", category: "ichimlik" },
+{ name: "Lipton 0.5L", price: 8000, img: "lipton.jpg", category: "ichimlik" },
 
-  // Fuse Tea
-  { name: "Fuse Tea 2L", price: 20000, img: "images/fusetea.jpg", category: "ichimlik" },
-  { name: "Fuse Tea 1.5L", price: 15000, img: "images/fusetea.jpg", category: "ichimlik" },
-  { name: "Fuse Tea 1L", price: 12000, img: "images/fusetea.jpg", category: "ichimlik" },
-  { name: "Fuse Tea 0.5L", price: 8000, img: "images/fusetea.jpg", category: "ichimlik" },
+// Fuse Tea
+{ name: "Fuse Tea 2L", price: 20000, img: "fusetea.jpg", category: "ichimlik" },
+{ name: "Fuse Tea 1.5L", price: 15000, img: "fusetea.jpg", category: "ichimlik" },
+{ name: "Fuse Tea 1L", price: 12000, img: "fusetea.jpg", category: "ichimlik" },
+{ name: "Fuse Tea 0.5L", price: 8000, img: "fusetea.jpg", category: "ichimlik" },
 
-  // Energiya ichimliklari
-  { name: "Gorilla", price: 13000, img: "images/gorilla.jpg", category: "ichimlik" },
-  { name: "Flash", price: 13000, img: "images/flash.jpg", category: "ichimlik" },
-  { name: "18+", price: 13000, img: "images/18plus.jpg", category: "ichimlik" },
-  { name: "Moxito", price: 13000, img: "images/moxito.jpg", category: "ichimlik" },
+// Energiya ichimliklari
+{ name: "Gorilla", price: 13000, img: "gorilla.jpg", category: "ichimlik" },
+{ name: "Flash", price: 13000, img: "flash.jpg", category: "ichimlik" },
+{ name: "18+", price: 13000, img: "18plus.jpg", category: "ichimlik" },
+{ name: "Moxito", price: 13000, img: "moxito.jpg", category: "ichimlik" },
 
-  // Gazli suv
-  { name: "Gazli suv 1.5L", price: 6000, img: "images/gazlisuv.jpg", category: "ichimlik" },
-  { name: "Gazli suv 1L", price: 5000, img: "images/gazlisuv.jpg", category: "ichimlik" },
-  { name: "Gazli suv 0.5L", price: 4000, img: "images/gazlisuv.jpg", category: "ichimlik" },
+// Gazli suv
+{ name: "Gazli suv 1.5L", price: 6000, img: "gazlisuv.jpg", category: "ichimlik" },
+{ name: "Gazli suv 1L", price: 5000, img: "gazlisuv.jpg", category: "ichimlik" },
+{ name: "Gazli suv 0.5L", price: 4000, img: "gazlisuv.jpg", category: "ichimlik" },
 
-  // Bez gaz suv
-  { name: "Bez gaz suv 1.5L", price: 6000, img: "images/bezgaz.jpg", category: "ichimlik" },
-  { name: "Bez gaz suv 1L", price: 5000, img: "images/bezgaz.jpg", category: "ichimlik" },
-  { name: "Bez gaz suv 0.5L", price: 4000, img: "images/bezgaz.jpg", category: "ichimlik" },
+// Bez gaz suv
+{ name: "Bez gaz suv 1.5L", price: 6000, img: "bezgaz.jpg", category: "ichimlik" },
+{ name: "Bez gaz suv 1L", price: 5000, img: "bezgaz.jpg", category: "ichimlik" },
+{ name: "Bez gaz suv 0.5L", price: 4000, img: "bezgaz.jpg", category: "ichimlik" },
+
 // Tez tayyor ovqatlar
-{ name: "Big Bon", price: 5000, img: "images/bigbon.jpg", category: "shirinlik" },
-{ name: "Hot Lunch", price: 5000, img: "images/hotlunch.jpg", category: "shirinlik" },
-{ name: "Rollton", price: 5000, img: "images/rollton.jpg", category: "shirinlik" },
+{ name: "Big Bon", price: 5000, img: "bigbon.jpg", category: "shirinlik" },
+{ name: "Hot Lunch", price: 5000, img: "hotlunch.jpg", category: "shirinlik" },
+{ name: "Rollton", price: 5000, img: "rollton.jpg", category: "shirinlik" },
 
 // Shirinliklar
-{ name: "Chupa Chups", price: 1000, img: "images/chupachups.jpg", category: "shirinlik" },
-{ name: "Chupa Chups 500", price: 500, img: "images/chupachups500.jpg", category: "shirinlik" },
-{ name: "Shar", price: 1000, img: "images/shar.jpg", category: "shirinlik" },
-{ name: "Orbit", price: 6000, img: "images/orbit.jpg", category: "shirinlik" },
-{ name: "Styx", price: 4000, img: "images/styx.jpg", category: "shirinlik" },
-{ name: "Kango", price: 2000, img: "images/kango.jpg", category: "shirinlik" },
+{ name: "Chupa Chups", price: 1000, img: "chupachups.jpg", category: "shirinlik" },
+{ name: "Chupa Chups 500", price: 500, img: "chupachups500.jpg", category: "shirinlik" },
+{ name: "Shar", price: 1000, img: "shar.jpg", category: "shirinlik" },
+{ name: "Orbit", price: 6000, img: "orbit.jpg", category: "shirinlik" },
+{ name: "Styx", price: 4000, img: "styx.jpg", category: "shirinlik" },
+{ name: "Kango", price: 2000, img: "kango.jpg", category: "shirinlik" },
 
 // Asosiy mahsulotlar
-{ name: "Guruch Lazer", price: 20000, img: "images/guruchlazer.jpg", category: "shirinlik" },
-{ name: "Turon Oliy Nav 1kg", price: 13000, img: "images/turon.jpg", category: "shirinlik" },
+{ name: "Guruch Lazer", price: 20000, img: "guruchlazer.jpg", category: "shirinlik" },
+{ name: "Turon Oliy Nav 1kg", price: 13000, img: "turon.jpg", category: "shirinlik" },
+
 // Sovun va Soda
-{ name: "Sovun", price: 5000, img: "images/sovun.jpg", category: "shirinlik" },
-{ name: "Soda 1L", price: 4000, img: "images/soda1l.jpg", category: "ichimlik" },
-{ name: "Soda 0.5L", price: 2500, img: "images/soda05l.jpg", category: "ichimlik" },
+{ name: "Sovun", price: 5000, img: "sovun.jpg", category: "shirinlik" },
+{ name: "Soda 1L", price: 4000, img: "soda1l.jpg", category: "ichimlik" },
+{ name: "Soda 0.5L", price: 2500, img: "soda05l.jpg", category: "ichimlik" },
 
-  // Shirinliklar
-  { name: "Snickers", price: 9000, img: "images/snickers.jpg", category: "shirinlik" },
-  { name: "KitKat", price: 10000, img: "images/kitkat.jpg", category: "shirinlik" },
-  { name: "Twix", price: 9500, img: "images/twix.jpg", category: "shirinlik" },
-  { name: "Shakar", price: 16000, img: "images/shakar.jpg", category: "shirinlik" },
-  { name: "Qand", price: 16000, img: "images/qand.jpg", category: "shirinlik" },
+// Shirinliklar
+{ name: "Snickers", price: 9000, img: "snickers.jpg", category: "shirinlik" },
+{ name: "KitKat", price: 10000, img: "kitkat.jpg", category: "shirinlik" },
+{ name: "Twix", price: 9500, img: "twix.jpg", category: "shirinlik" },
+{ name: "Shakar", price: 16000, img: "shakar.jpg", category: "shirinlik" },
+{ name: "Qand", price: 16000, img: "qand.jpg", category: "shirinlik" },
+
 // Ro'zg'or mahsulotlari
-{ name: "Kir sovun", price: 6000, img: "images/kirsovun.jpg", category: "ro'zg'or" },
-{ name: "Parashok Aprel", price: 6000, img: "images/aprel.jpg", category: "ro'zg'or" },
-{ name: "Bavi", price: 10000, img: "images/bavi.jpg", category: "ro'zg'or" },
-{ name: "Kapsula", price: 5000, img: "images/kapsula.jpg", category: "ro'zg'or" },
-{ name: "Xitoy sovun", price: 15000, img: "images/xitojsovun.jpg", category: "ro'zg'or" },
+{ name: "Kir sovun", price: 6000, img: "kirsovun.jpg", category: "ro'zg'or" },
+{ name: "Parashok Aprel", price: 6000, img: "aprel.jpg", category: "ro'zg'or" },
+{ name: "Bavi", price: 10000, img: "bavi.jpg", category: "ro'zg'or" },
+{ name: "Kapsula", price: 5000, img: "kapsula.jpg", category: "ro'zg'or" },
+{ name: "Xitoy sovun", price: 15000, img: "xitojsovun.jpg", category: "ro'zg'or" },
+{ name: "Pista yog' 1L", price: 23000, img: "pistayog1l.jpg", category: "ro'zg'or" },
+{ name: "Pista yog' 5L", price: 105000, img: "pistayog5l.jpg", category: "ro'zg'or"},
 
-{ name: "Pista yog' 1L", price: 23000, img: "images/pistayog1l.jpg", category: "ro'zg'or" },
-{ name: "Pista yog' 5L", price: 105000, img: "images/pistayog5l.jpg", category: "ro'zg'or" },
-
-{ name: "Vlojni", price: 3000, img: "images/vlojni.jpg", category: "ro'zg'or" },
-{ name: "Elma Vlojni", price: 14000, img: "images/elma.jpg", category: "ro'zg'or" },
-{ name: "Baby Vlojni", price: 14000, img: "images/baby.jpg", category: "ro'zg'or" },
-
-{ name: "Fructis katta", price: 40000, img: "images/fructisbig.jpg", category: "ro'zg'or" },
-{ name: "Fructis kichik", price: 30000, img: "images/fructissmall.jpg", category: "ro'zg'or" },
-
-{ name: "Doctor Fresh", price: 20000, img: "images/doctorfresh.jpg", category: "ro'zg'or" },
-{ name: "Clear katta", price: 38000, img: "images/clearbig.jpg", category: "ro'zg'or" },
-{ name: "Clear kichik", price: 27000, img: "images/clearsmall.jpg", category: "ro'zg'or" },
-
-{ name: "Colgate 100ml", price: 17000, img: "images/colgate100.jpg", category: "ro'zg'or" },
-{ name: "Colgate 50ml", price: 10000, img: "images/colgate50.jpg", category: "ro'zg'or" },
-
-{ name: "Qora krem", price: 4000, img: "images/qorakrem.jpg", category: "ro'zg'or" },
-{ name: "Paletta kraska", price: 24000, img: "images/paletta.jpg", category: "ro'zg'or" },
-{ name: "Ryabina", price: 21000, img: "images/ryabina.jpg", category: "ro'zg'or" },
-
-{ name: "Quruq salfetka", price: 3000, img: "images/salfetka.jpg", category: "ro'zg'or" },
-{ name: "Zajigalka speral", price: 7000, img: "images/zajigalkasperal.jpg", category: "ro'zg'or" },
-{ name: "Zajigalka", price: 5000, img: "images/zajigalka.jpg", category: "ro'zg'or" },
-
-{ name: "Delfin", price: 11000, img: "images/delfin.jpg", category: "ro'zg'or" },
-{ name: "Gugurt", price: 5000, img: "images/gugurt.jpg", category: "ro'zg'or" },
-
-{ name: "Kafolat gel 1kg", price: 23000, img: "images/kafolatgel.jpg", category: "ro'zg'or" },
-
-{ name: "Moloko 350gr", price: 13000, img: "images/moloko350.jpg", category: "ro'zg'or" },
-{ name: "Moloko 480gr", price: 19000, img: "images/moloko480.jpg", category: "ro'zg'or" },
-
-{ name: "Ittifoq", price: 18000, img: "images/ittifoq.jpg", category: "ro'zg'or" },
-{ name: "Uksus 160gr", price: 7000, img: "images/uksus.jpg", category: "ro'zg'or" },
-{ name: "Falga", price: 13000, img: "images/falga.jpg", category: "ro'zg'or" },
-
-{ name: "Makaron 1kg", price: 12000, img: "images/makaron1.jpg", category: "ro'zg'or" },
-{ name: "Makaron 1kg", price: 11000, img: "images/makaron2.jpg", category: "ro'zg'or" },
-
-{ name: "Silk sovun", price: 8000, img: "images/silk.jpg", category: "ro'zg'or" },
-{ name: "Olivia", price: 9000, img: "images/olivia.jpg", category: "ro'zg'or" }
 ];
-
-
 
 let cart = [];
 
