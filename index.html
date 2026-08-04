@@ -258,12 +258,18 @@ function filterByCategory() {
 
 function order() {
   let text = "Salom, buyurtma:%0A";
+  let total = 0;
+
   cart.forEach(p => {
     text += `${p.name} x${p.qty} - ${p.price * p.qty} so‘m%0A`;
+    total += p.price * p.qty;
   });
+
+  text += `%0AJami: ${total} so‘m`;
 
   window.open("https://t.me/rsaliyev1?text=" + text);
 }
+
 
 showProducts(products);
 </script>
