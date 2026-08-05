@@ -254,8 +254,7 @@
 
     #cartContainer label,
     #cartContainer select,
-    #cartContainer input,
-    #cartContainer button {
+    #cartContainer input {
       width: 100%;
       max-width: 100%;
     }
@@ -265,12 +264,28 @@
       margin: 8px 0;
     }
 
-    #cartContainer button {
+    .cart-actions {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      justify-content: flex-end;
+      overflow-x: auto;
+    }
+
+    .cart-actions button {
+      width: auto;
+      margin-top: 0;
+      white-space: nowrap;
+    }
+
+    #cartContainer > button {
       margin-top: 10px;
       background: #1f7f35;
       padding: 14px;
       border-radius: 16px;
       font-size: 1rem;
+      width: 100%;
+      max-width: 100%;
     }
 
     /* Qidiruv tugmasi (kattaroq pastda) */
@@ -416,6 +431,11 @@ function showCart() {
           <button onclick="changeQuantity(${index}, -1)">-</button>
           <button onclick="removeFromCart(${index})">O‘chirish</button>
         </div>
+      </li>
+    `;
+  });
+
+  const deliveryFee = getDeliveryFee();
   const total = subtotal + deliveryFee;
   cartHtml += `<li><strong>Subtotal: ${subtotal} so‘m</strong></li>`;
   cartHtml += `<li><strong>Yetkazib berish: ${deliveryFee} so‘m</strong></li>`;
