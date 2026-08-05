@@ -5,20 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Do‘konim</title>
   <style>
-    body {
-      font-family: Inter, Arial, sans-serif;
-      background: linear-gradient(180deg, #ecf5ff 0%, #f7fafc 60%, #f0f2f5 100%);
-      margin: 0;
-      padding: 90px 12px 16px;
-      color: #213547;
+    :root {
+      --bg: #ecf5ff;
+      --surface: #ffffff;
+      --surface-soft: #f7fcf8;
+      --border: rgba(31, 79, 39, 0.12);
+      --text: #213547;
+      --text-muted: #58666f;
+      --primary: #1f7f35;
     }
 
-    h1 {
-      text-align: center;
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
-      font-size: 1.75rem;
-      letter-spacing: 0.03em;
-      color: #19692d;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, #f7fafc 60%, #f0f2f5 100%);
+      color: var(--text);
+      padding: 126px 14px 14px;
     }
 
     .page-header {
@@ -26,131 +37,92 @@
       top: 0;
       left: 0;
       right: 0;
-      z-index: 99999;
-      width: 100%;
-      margin: 0;
-      padding: 10px 10px 8px;
-      background: rgba(236, 245, 255, 0.98);
-      backdrop-filter: blur(10px);
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(31, 79, 39, 0.08);
+      box-shadow: 0 12px 28px rgba(31, 79, 39, 0.1);
+      padding: 12px 14px 10px;
     }
 
-    .controls {
+    .page-header h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      text-align: center;
+      color: var(--primary);
+    }
+
+    .top-bar {
       display: flex;
       flex-wrap: wrap;
+      gap: 8px;
       justify-content: center;
-      align-items: center;
-      gap: 6px;
-      margin-top: 6px;
+      margin-top: 10px;
     }
 
-    .page-header .controls {
-      margin-top: 8px;
-    }
-
-    .page-header input,
-    .page-header select {
-      width: 100%;
-      max-width: 190px;
-      min-width: 0;
-    }
-
-    .controls input {
-      flex: 0 0 180px;
-      width: 180px;
-      min-width: 0;
+    .top-bar input,
+    .top-bar select {
+      border: 1px solid rgba(31, 79, 39, 0.16);
+      border-radius: 14px;
       padding: 10px 12px;
+      background: #fff;
+      color: var(--text);
+      font-size: 0.95rem;
+      box-shadow: inset 0 1px 2px rgba(31, 79, 39, 0.05);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .controls select {
+    .top-bar input {
+      flex: 1 1 220px;
+      min-width: 120px;
+      max-width: 280px;
+    }
+
+    .top-bar select {
       flex: 0 0 140px;
-      width: 140px;
-      min-width: 0;
-      padding: 10px 12px;
+      min-width: 120px;
+      max-width: 160px;
     }
 
-    #floatingLogo {
-      position: fixed;
-      bottom: 26px;
-      right: 26px;
-      background: #1f7f35;
-      color: white;
-      padding: 18px;
-      border-radius: 50%;
-      cursor: grab;
-      box-shadow: 0 24px 40px rgba(39, 117, 59, 0.25);
-      font-size: 28px;
-      text-align: center;
-      transition: background 0.15s ease, box-shadow 0.15s ease;
-      z-index: 25;
-    }
-    #floatingLogo.grabbing {
-      cursor: grabbing;
-    }
-    #floatingLogo:hover {
-      background: #22964a;
-    }
-    #floatingLogo:active {
-      box-shadow: 0 12px 20px rgba(39, 117, 59, 0.25);
+    .top-bar input:focus,
+    .top-bar select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(31, 127, 53, 0.12);
     }
 
     #products {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 18px;
-      margin: 0 auto 240px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
       max-width: 1200px;
+      margin: 0 auto 260px;
     }
 
     .product {
-      background: #ffffff;
-      padding: 18px 16px;
-      border-radius: 24px;
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 14px;
       text-align: center;
-      box-shadow: 0 18px 50px rgba(42, 91, 84, 0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      min-height: 360px;
+      box-shadow: 0 16px 32px rgba(31, 79, 39, 0.08);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      min-height: 300px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
 
     .product:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 24px 60px rgba(42, 91, 84, 0.12);
-    }
-
-    @media (max-width: 720px) {
-      .product {
-        min-height: auto;
-        padding: 14px 12px;
-      }
-
-      .product img {
-        height: 140px;
-      }
-
-      .product h3 {
-        font-size: 1rem;
-      }
-
-      .product p {
-        font-size: 0.92rem;
-        margin-bottom: 10px;
-      }
-
-      button {
-        padding: 10px 14px;
-        font-size: 0.95rem;
-      }
+      transform: translateY(-3px);
+      box-shadow: 0 22px 42px rgba(31, 79, 39, 0.14);
     }
 
     .product img {
       width: 100%;
-      height: 180px;
+      height: 160px;
       object-fit: contain;
       border-radius: 16px;
-      background: #f9fbff;
+      background: #f5fbff;
       margin-bottom: 14px;
     }
 
@@ -162,577 +134,342 @@
 
     .product p {
       margin: 0 0 16px;
-      color: #5a6a72;
+      color: var(--text-muted);
       font-weight: 600;
     }
 
-    button {
-      background: #1f7f35;
-      color: white;
+    .product button {
+      background: var(--primary);
+      color: #fff;
       border: none;
-      padding: 12px 16px;
       border-radius: 14px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.2s ease;
-    }
-
-    button:hover {
-      background: #45a049;
-    }
-
-    input, select {
-      display: inline-flex;
-      margin: 0;
       padding: 12px 14px;
-      width: 230px;
-      border: 1px solid rgba(28, 60, 42, 0.14);
-      border-radius: 14px;
-      background: #ffffff;
       font-size: 0.95rem;
-      color: #22303a;
-      box-shadow: inset 0 1px 2px rgba(31, 79, 39, 0.06);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      transition: background 0.18s ease;
     }
 
-    input:focus, select:focus {
-      outline: none;
-      border-color: #56b36b;
-      box-shadow: 0 0 0 4px rgba(86, 179, 107, 0.12);
+    .product button:hover {
+      background: #22964a;
     }
 
-    .controls input {
-      width: min(320px, 100%);
-    }
-
-    .controls select {
-      width: min(220px, 100%);
-    }
-
-    /* Telefon uchun maxsus */
-    @media (max-width: 850px) {
-      .controls {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 6px;
-      }
-
-      .controls input,
-      .controls select {
-        width: 100%;
-      }
-
-      #floatingLogo {
-        display: none;
-      }
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 88px 10px 14px;
-      }
-
-      #products {
-        grid-template-columns: repeat(1, 1fr);
-      }
-
-      .page-header {
-        padding: 8px 10px 8px;
-      }
-
-      .page-header h1 {
-        font-size: 0.98rem;
-        margin-bottom: 4px;
-      }
-
-      .controls {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 6px;
-        margin-top: 6px;
-      }
-
-      .controls input,
-      .controls select {
-        width: 100%;
-        max-width: none;
-        min-width: auto;
-        padding: 10px 10px;
-        font-size: 0.9rem;
-      }
-    }
-
-    @media (max-width: 500px) {
-      body {
-        padding: 90px 10px 14px;
-      }
-
-      #cartContainer {
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 14px;
-        max-height: 320px;
-        border-radius: 20px 20px 0 0;
-      }
-
-      #cartContainer h2 {
-        font-size: 1rem;
-        margin-bottom: 10px;
-      }
-
-      #cartContainer li {
-        padding: 8px 10px;
-        font-size: 0.92rem;
-      }
-
-      #cartContainer button {
-        padding: 12px;
-        font-size: 0.95rem;
-      }
-    }
-
-    /* Savat pastda fixed va scroll */
     #cartContainer {
       position: fixed;
-      bottom: 16px;
-      left: 16px;
-      right: 16px;
-      background: rgba(250, 255, 247, 0.98);
-      border: 1px solid rgba(75, 178, 93, 0.18);
-      border-radius: 26px;
-      padding: 18px 20px;
-      box-shadow: 0 24px 70px rgba(15, 62, 31, 0.12);
-      max-height: 260px;
-      overflow-y: auto;
-      backdrop-filter: blur(12px);
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      max-height: 320px;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid rgba(31, 79, 39, 0.16);
+      border-radius: 22px;
+      box-shadow: 0 24px 52px rgba(31, 79, 39, 0.12);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 900;
     }
-    #cartContainer h2 {
-      margin: 0 0 12px;
-      font-size: 1.1rem;
-      color: #1f7f35;
+
+    #cartHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
     }
-    #cartContainer ul {
-      padding-left: 0;
-      margin: 0 0 12px;
-      list-style: none;
+
+    #cartHeader h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--primary);
     }
-    #cartContainer li {
-      margin-bottom: 10px;
+
+    #cartToggle {
+      background: transparent;
+      border: 1px solid rgba(31, 79, 39, 0.18);
+      color: var(--primary);
+      border-radius: 12px;
+      padding: 8px 12px;
+      cursor: pointer;
       font-size: 0.95rem;
-      color: #2f4035;
+    }
+
+    #cart {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      overflow-y: auto;
+      flex: 1;
+      min-height: 40px;
+    }
+
+    #cart li {
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 10px;
       align-items: center;
       padding: 10px 12px;
       border-radius: 14px;
-      background: #f7fdf4;
-      border: 1px solid rgba(39, 117, 59, 0.08);
+      background: var(--surface-soft);
+      border: 1px solid rgba(31, 79, 39, 0.08);
+      margin-bottom: 10px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
     }
 
     .cart-actions {
       display: flex;
+      gap: 8px;
+      justify-content: flex-end;
       flex-wrap: wrap;
-      gap: 8px;
-      justify-content: flex-end;
-      min-width: 150px;
     }
 
     .cart-actions button {
-      padding: 8px 10px;
-      min-width: 38px;
-      font-size: 0.9rem;
-    }
-
-    #cartContainer label,
-    #cartContainer select,
-    #cartContainer input {
-      width: 100%;
-      max-width: 100%;
-    }
-
-    #cartContainer select,
-    #cartContainer input {
-      margin: 8px 0;
-    }
-
-    .cart-actions {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 8px;
-      justify-content: flex-end;
-      overflow-x: auto;
-    }
-
-    .cart-actions button {
-      width: auto;
-      margin-top: 0;
-      white-space: nowrap;
-    }
-
-    #cartContainer > button {
-      margin-top: 10px;
-      background: #1f7f35;
-      padding: 14px;
-      border-radius: 16px;
-      font-size: 1rem;
-      width: 100%;
-      max-width: 100%;
-    }
-
-    /* Qidiruv tugmasi (kattaroq pastda) */
-    #floatingLogo {
-      position: fixed;
-      bottom: 26px;
-      right: 26px;
-      background: #1f7f35;
-      color: white;
-      padding: 16px;
-      border-radius: 50%;
+      border: 1px solid rgba(31, 79, 39, 0.18);
+      background: transparent;
+      color: var(--primary);
+      border-radius: 12px;
+      padding: 6px 10px;
       cursor: pointer;
-      box-shadow: 0 24px 40px rgba(39, 117, 59, 0.25);
-      font-size: 24px;
-      text-align: center;
-      transition: transform 0.15s ease, background 0.15s ease;
-      z-index: 25;
+      font-size: 0.88rem;
     }
-    #floatingLogo:hover {
-      background: #22964a;
+
+    #cartFooter {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
     }
-    #floatingLogo:active {
-      box-shadow: 0 12px 20px rgba(39, 117, 59, 0.25);
+
+    #cartFooter p {
+      margin: 0;
+      font-weight: 700;
+      color: #2f4b2f;
+    }
+
+    #cartFooter button {
+      width: 100%;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 16px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 0.97rem;
+    }
+
+    #cartContainer.collapsed {
+      max-height: 52px;
+      padding-bottom: 8px;
+    }
+
+    #cartContainer.collapsed #cart,
+    #cartContainer.collapsed #cartFooter {
+      display: none;
+    }
+
+    @media (max-width: 860px) {
+      body { padding-top: 142px; }
+      #products { gap: 12px; }
+    }
+
+    @media (max-width: 640px) {
+      body { padding-top: 152px; }
+      .page-header { padding: 10px 12px 10px; }
+      .page-header h1 { font-size: 1.05rem; }
+      .top-bar { gap: 6px; }
+      .top-bar input, .top-bar select { width: 100%; max-width: none; }
+      .product { min-height: auto; padding: 14px 12px; }
+      .product img { height: 140px; }
+      .product h3 { font-size: 1rem; }
+      .product p { font-size: 0.92rem; margin-bottom: 10px; }
+      .product button { padding: 10px 12px; font-size: 0.94rem; }
+      #cartContainer { left: 10px; right: 10px; bottom: 10px; border-radius: 20px; padding: 12px; }
+      #cartContainer.collapsed { max-height: 48px; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding-top: 156px; }
+      .page-header h1 { font-size: 0.98rem; }
+      #cartHeader h2 { font-size: 0.98rem; }
+      #cartFooter { grid-template-columns: 1fr; }
     }
   </style>
 </head>
-
 <body>
-
-<div class="page-header">
-  <h1>🛒 Do‘kon</h1>
-  <div class="controls">
-    <input type="text" id="search" placeholder="Qidirish..." onkeyup="searchProduct()">
-    <select id="categoryFilter" onchange="filterByCategory()">
-      <option value="all">Barchasi</option>
-      <option value="ichimlik">Ichimliklar</option>
-      <option value="shirinlik">Shirinliklar</option>
-      <option value="ro'zg'or">Ro‘zg‘or</option>
-    </select>
+  <div class="page-header">
+    <h1>🛒 Do‘kon</h1>
+    <div class="top-bar">
+      <input type="text" id="search" placeholder="Qidirish..." oninput="searchProduct()">
+      <select id="categoryFilter" onchange="searchProduct()">
+        <option value="all">Barchasi</option>
+        <option value="ichimlik">Ichimliklar</option>
+        <option value="shirinlik">Shirinliklar</option>
+        <option value="ro'zg'or">Ro‘zg‘or</option>
+      </select>
+    </div>
   </div>
-</div>
 
-<div id="products"></div>
+  <div id="products"></div>
 
-<!-- Savat pastda fixed -->
-<div id="cartContainer">
-  <h2>🧺 Savat</h2>
-  <ul id="cart"></ul>
-  <label for="deliveryMethod">Yetkazib berish:</label>
-  <select id="deliveryMethod" onchange="showCart()">
-    <option value="pickup">Do‘kondan olish</option>
-    <option value="delivery">Uyga yetkazib berish (+5000 so‘m)</option>
-  </select>
-  <input type="text" id="deliveryAddress" placeholder="Manzil (agar yetkazib berish)" />
-  <button onclick="order()">Buyurtma berish</button>
-</div>
+  <div id="cartContainer" class="collapsed">
+    <div id="cartHeader">
+      <h2>🧺 Savat</h2>
+      <button id="cartToggle" onclick="toggleCart()">Ochish</button>
+    </div>
+    <ul id="cart"></ul>
+    <div id="cartFooter">
+      <p id="cartTotal">Jami: 0 so‘m</p>
+      <button onclick="order()">Buyurtma berish</button>
+    </div>
+  </div>
 
-<!-- Qidiruv tugmasi (kattaroq pastda) -->
-<div id="floatingLogo">🔍</div>
+  <script>
+    const products = [
+      { name: "Kola 2L", price: 20000, img: "kola.jpg", category: "ichimlik" },
+      { name: "Pepsi 1L", price: 12000, img: "pepsi.jpg", category: "ichimlik" },
+      { name: "Fanta 0.5L", price: 8000, img: "fanta.jpg", category: "ichimlik" },
+      { name: "Sprite 1.5L", price: 15000, img: "sprite.jpg", category: "ichimlik" },
+      { name: "Lipton 0.5L", price: 8000, img: "lipton.jpg", category: "ichimlik" },
+      { name: "Snickers", price: 9000, img: "snickers.jpg", category: "shirinlik" },
+      { name: "KitKat", price: 10000, img: "kitkat.jpg", category: "shirinlik" },
+      { name: "Twix", price: 9500, img: "twix.jpg", category: "shirinlik" },
+      { name: "Orbit", price: 6000, img: "orbit.jpg", category: "shirinlik" },
+      { name: "Chupa Chups", price: 1000, img: "chupachups.jpg", category: "shirinlik" },
+      { name: "Kir sovun", price: 6000, img: "kirsovun.jpg", category: "ro'zg'or" },
+      { name: "Makaron 1kg", price: 12000, img: "makaron1.jpg", category: "ro'zg'or" },
+      { name: "Moloko 350gr", price: 13000, img: "moloko350.jpg", category: "ro'zg'or" }
+    ];
 
-<script>
-let products = [
-  // Ichimliklar
-  { name: "Kola 2L", price: 20000, img: "kola.jpg", category: "ichimlik" },
-  { name: "Pepsi 1L", price: 12000, img: "pepsi.jpg", category: "ichimlik" },
-  { name: "Fanta 0.5L", price: 8000, img: "fanta.jpg", category: "ichimlik" },
-  { name: "Sprite 1.5L", price: 15000, img: "sprite.jpg", category: "ichimlik" },
-  { name: "Lipton 0.5L", price: 8000, img: "lipton.jpg", category: "ichimlik" },
-  { name: "Fuse Tea 1L", price: 12000, img: "fusetea.jpg", category: "ichimlik" },
-  { name: "Gorilla", price: 13000, img: "gorilla.jpg", category: "ichimlik" },
-  { name: "Flash", price: 13000, img: "flash.jpg", category: "ichimlik" },
-  { name: "18+", price: 13000, img: "18plus.jpg", category: "ichimlik" },
-  { name: "Moxito", price: 13000, img: "moxito.jpg", category: "ichimlik" },
-  { name: "Gazli suv 1L", price: 5000, img: "gazlisuv.jpg", category: "ichimlik" },
-  { name: "Bez gaz suv 0.5L", price: 4000, img: "bezgaz.jpg", category: "ichimlik" },
+    const defaultImg = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"%3E%3Crect width="300" height="200" fill="%23ececec"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23999" font-family="Arial,Helvetica,sans-serif" font-size="18"%3ENo+image%3C/text%3E%3C/svg%3E';
 
-  // Shirinliklar
-  { name: "Snickers", price: 9000, img: "snickers.jpg", category: "shirinlik" },
-  { name: "KitKat", price: 10000, img: "kitkat.jpg", category: "shirinlik" },
-  { name: "Twix", price: 9500, img: "twix.jpg", category: "shirinlik" },
-  { name: "Orbit", price: 6000, img: "orbit.jpg", category: "shirinlik" },
-  { name: "Chupa Chups", price: 1000, img: "chupachups.jpg", category: "shirinlik" },
-  { name: "Shar", price: 1000, img: "shar.jpg", category: "shirinlik" },
-  { name: "Shakar", price: 16000, img: "shakar.jpg", category: "shirinlik" },
-  { name: "Qand", price: 16000, img: "qand.jpg", category: "shirinlik" },
-
-  // Ro‘zg‘or
-  { name: "Kir sovun", price: 6000, img: "kirsovun.jpg", category: "ro'zg'or" },
-  { name: "Parashok Aprel", price: 6000, img: "aprel.jpg", category: "ro'zg'or" },
-  { name: "Pista yog' 1L", price: 23000, img: "pistayog1l.jpg", category: "ro'zg'or" },
-  { name: "Pista yog' 5L", price: 105000, img: "pistayog5l.jpg", category: "ro'zg'or" },
-  { name: "Clear katta", price: 38000, img: "clearbig.jpg", category: "ro'zg'or" },
-  { name: "Colgate 100ml", price: 17000, img: "colgate100.jpg", category: "ro'zg'or" },
-  { name: "Moloko 350gr", price: 13000, img: "moloko350.jpg", category: "ro'zg'or" },
-  { name: "Makaron 1kg", price: 12000, img: "makaron1.jpg", category: "ro'zg'or" },
-  { name: "Olivia", price: 9000, img: "olivia.jpg", category: "ro'zg'or" }
-];
-
-const defaultImg = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23ececec'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-family='Arial,Helvetica,sans-serif' font-size='18'%3ENo+image%3C/text%3E%3C/svg%3E";
-
-// Telegram bot token va chat ID.
-// Endi sizning shaxsiy chat ID ishlatiladi, botga ruxsatli xabar yuboradi.
-const telegramConfig = {
-  botToken: "8998474143:AAHRwF3maPykjMmswx8hyJU3NOBenfaf-YM",
-  chatId: "8341622654"
-};
-
-let cart = [];
-
-function showProducts(list) {
-  let html = "";
-  list.forEach((p, i) => {
-    html += `
-      <div class="product">
-        <img src="${p.img || defaultImg}" onerror="this.onerror=null;this.src='${defaultImg}'" alt="${p.name}">
-        <h3>${p.name}</h3>
-        <p>${p.price} so‘m</p>
-        <button onclick="addToCart(${i})">Savatga qo‘shish</button>
-      </div>
-    `;
-  });
-  document.getElementById("products").innerHTML = html;
-}
-
-function setupFloatingSearchButtonDrag() {
-  if (window.innerWidth <= 600) {
-    return; // keep the button fixed on mobile
-  }
-
-  const widget = document.getElementById('floatingLogo');
-  let isDragging = false;
-  let offsetX = 0;
-  let offsetY = 0;
-
-  const startDrag = event => {
-    event.preventDefault();
-    const point = event.touches ? event.touches[0] : event;
-    isDragging = true;
-    widget.classList.add('grabbing');
-    offsetX = point.clientX - widget.offsetLeft;
-    offsetY = point.clientY - widget.offsetTop;
-  };
-
-  const moveDrag = event => {
-    if (!isDragging) return;
-    event.preventDefault();
-    const point = event.touches ? event.touches[0] : event;
-    let x = point.clientX - offsetX;
-    let y = point.clientY - offsetY;
-    const maxX = window.innerWidth - widget.offsetWidth - 16;
-    const maxY = window.innerHeight - widget.offsetHeight - 16;
-    x = Math.min(Math.max(16, x), maxX);
-    y = Math.min(Math.max(16, y), maxY);
-    widget.style.left = `${x}px`;
-    widget.style.top = `${y}px`;
-  };
-
-  const stopDrag = () => {
-    if (!isDragging) return;
-    isDragging = false;
-    widget.classList.remove('grabbing');
-  };
-
-  widget.addEventListener('mousedown', startDrag);
-  widget.addEventListener('touchstart', startDrag, { passive: false });
-  window.addEventListener('mousemove', moveDrag);
-  window.addEventListener('touchmove', moveDrag, { passive: false });
-  window.addEventListener('mouseup', stopDrag);
-  window.addEventListener('touchend', stopDrag);
-}
-
-function getDeliveryFee() {
-  return document.getElementById("deliveryMethod").value === "delivery" ? 10000 : 0;
-}
-
-function showCart() {
-  const cartList = document.getElementById("cart");
-  if (cart.length === 0) {
-    cartList.innerHTML = '<li>Savat bo‘sh</li>';
-    return;
-  }
-
-  let cartHtml = "";
-  let subtotal = 0;
-  cart.forEach((item, index) => {
-    const lineTotal = item.price * item.quantity;
-    subtotal += lineTotal;
-    cartHtml += `
-      <li>
-        <span>${item.name} - ${item.price} so‘m x ${item.quantity} = ${lineTotal} so‘m</span>
-        <div class="cart-actions">
-          <button onclick="changeQuantity(${index}, 1)">+</button>
-          <button onclick="changeQuantity(${index}, -1)">-</button>
-          <button onclick="removeFromCart(${index})">O‘chirish</button>
-        </div>
-      </li>
-    `;
-  });
-
-  const deliveryFee = getDeliveryFee();
-  const total = subtotal + deliveryFee;
-  cartHtml += `<li><strong>Subtotal: ${subtotal} so‘m</strong></li>`;
-  cartHtml += `<li><strong>Yetkazib berish: ${deliveryFee} so‘m</strong></li>`;
-  cartHtml += `<li><strong>Jami: ${total} so‘m</strong></li>`;
-  cartList.innerHTML = cartHtml;
-}
-
-function addToCart(index) {
-  const product = products[index];
-  const existing = cart.find(item => item.name === product.name);
-  if (existing) {
-    existing.quantity += 1;
-  } else {
-    cart.push({ ...product, quantity: 1 });
-  }
-  showCart();
-}
-
-function changeQuantity(index, delta) {
-  cart[index].quantity += delta;
-  if (cart[index].quantity <= 0) {
-    cart.splice(index, 1);
-  }
-  showCart();
-}
-
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  showCart();
-}
-
-function order() {
-  if (cart.length === 0) {
-    alert("Savat bo‘sh. Iltimos, avval mahsulot qo‘shing.");
-    return;
-  }
-
-  const deliveryMethod = document.getElementById("deliveryMethod").value;
-  const address = document.getElementById("deliveryAddress").value.trim();
-  if (deliveryMethod === "delivery" && !address) {
-    alert("Yetkazib berish uchun manzil kiriting.");
-    return;
-  }
-
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const deliveryFee = getDeliveryFee();
-  const total = subtotal + deliveryFee;
-  const methodText = deliveryMethod === "delivery" ? `Yetkazib berish manzil: ${address}` : "Do‘kondan olish";
-
-  const message = buildTelegramMessage(cart, deliveryMethod, address, total);
-  sendOrderToTelegram(message)
-    .then(() => {
-      alert(`Buyurtmangiz qabul qilindi!\n${methodText}\nJami: ${total} so‘m.`);
-      cart = [];
-      document.getElementById("deliveryAddress").value = "";
-      document.getElementById("deliveryMethod").value = "pickup";
-      showCart();
-    })
-    .catch(error => {
-      console.error(error);
-      alert("Xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko‘ring.");
-    });
-}
-
-function buildTelegramMessage(cart, deliveryMethod, address, total) {
-  const lines = ['Yangi buyurtma:'];
-  cart.forEach(item => {
-    lines.push(`${item.name} x ${item.quantity} = ${item.price * item.quantity} so‘m`);
-  });
-  lines.push(`Jami: ${total} so‘m`);
-  lines.push(`Yetkazib berish: ${deliveryMethod === 'delivery' ? 'Ha' : 'Yo‘q'}`);
-  if (deliveryMethod === 'delivery') {
-    lines.push(`Manzil: ${address}`);
-  }
-  return lines.join('\n');
-}
-
-function resolveTelegramChatId() {
-  const chatId = String(telegramConfig.chatId || '').trim();
-  if (!chatId) {
-    return Promise.reject(new Error('Telegram chatId sozlanmagan.'));
-  }
-
-  if (/^@/.test(chatId) || /\D/.test(chatId)) {
-    const url = `https://api.telegram.org/bot${encodeURIComponent(telegramConfig.botToken)}/getChat`;
-    const body = { chat_id: chatId };
-
-    return fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    }).then(response => response.json().then(data => {
-      if (!data.ok) {
-        throw new Error(data.description || 'Telegram getChat xatoligi.');
-      }
-      return String(data.result.id);
-    }))
-    .catch(err => {
-      throw new Error(`getChat xatoligi: ${err.message}`);
-    });
-  }
-
-  return Promise.resolve(chatId);
-}
-
-function sendOrderToTelegram(message) {
-  return resolveTelegramChatId().then(resolvedChatId => {
-    const url = `https://api.telegram.org/bot${encodeURIComponent(telegramConfig.botToken)}/sendMessage`;
-    const body = {
-      chat_id: resolvedChatId,
-      text: message
+    const telegramConfig = {
+      botToken: "8998474143:AAHRwF3maPykjMmswx8hyJU3NOBenfaf-YM",
+      chatId: "8341622654"
     };
 
-    return fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    }).then(response => {
-      if (!response.ok) {
-        return response.json().then(data => {
-          throw new Error(data.description || 'Telegram API error');
+    let cart = [];
+    let cartOpen = false;
+
+    function showProducts(list) {
+      const container = document.getElementById('products');
+      container.innerHTML = list.map((product, index) => `
+        <div class="product">
+          <img src="${product.img}" onerror="this.src='${defaultImg}'" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>${product.price.toLocaleString('uz-UZ')} so‘m</p>
+          <button onclick="addToCart(${index})">Savatga qo‘shish</button>
+        </div>
+      `).join('');
+    }
+
+    function addToCart(index) {
+      const selected = products[index];
+      const item = cart.find(entry => entry.name === selected.name);
+      if (item) item.quantity += 1;
+      else cart.push({ ...selected, quantity: 1 });
+      showCart();
+    }
+
+    function changeQuantity(index, delta) {
+      cart[index].quantity += delta;
+      if (cart[index].quantity <= 0) cart.splice(index, 1);
+      showCart();
+    }
+
+    function showCart() {
+      const cartList = document.getElementById('cart');
+      const totalEl = document.getElementById('cartTotal');
+      if (!cart.length) {
+        cartList.innerHTML = '<li>Savat bo‘sh</li>';
+        totalEl.textContent = 'Jami: 0 so‘m';
+        return;
+      }
+
+      let total = 0;
+      cartList.innerHTML = cart.map((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        return `
+          <li>
+            <span>${item.name} x ${item.quantity}</span>
+            <div class="cart-actions">
+              <button onclick="changeQuantity(${index}, 1)">+</button>
+              <button onclick="changeQuantity(${index}, -1)">-</button>
+            </div>
+          </li>
+        `;
+      }).join('');
+
+      totalEl.textContent = `Jami: ${total.toLocaleString('uz-UZ')} so‘m`;
+    }
+
+    function searchProduct() {
+      const query = document.getElementById('search').value.toLowerCase();
+      const category = document.getElementById('categoryFilter').value;
+      const filtered = products.filter(product => {
+        const matchesQuery = product.name.toLowerCase().includes(query);
+        const matchesCategory = category === 'all' || product.category === category;
+        return matchesQuery && matchesCategory;
+      });
+      showProducts(filtered);
+    }
+
+    function toggleCart() {
+      cartOpen = !cartOpen;
+      const cartContainer = document.getElementById('cartContainer');
+      const toggle = document.getElementById('cartToggle');
+      cartContainer.classList.toggle('collapsed', !cartOpen);
+      toggle.textContent = cartOpen ? 'Yopish' : 'Ochish';
+    }
+
+    function order() {
+      if (!cart.length) {
+        alert('Savat bo‘sh. Iltimos, mahsulot qo‘shing.');
+        return;
+      }
+
+      const cartLines = cart.map(item => `${item.name} x ${item.quantity} = ${item.price * item.quantity} so‘m`);
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      const message = `Yangi buyurtma:%0A${cartLines.join('%0A')}%0AJami: ${total} so‘m`;
+      sendOrderToTelegram(message)
+        .then(() => alert('Buyurtmangiz qabul qilindi!'))
+        .catch(() => {
+          window.open(`https://t.me/rsaliyev1?text=${message}`, '_blank');
+        });
+    }
+
+    function resolveTelegramChatId() {
+      const chatId = String(telegramConfig.chatId || '').trim();
+      if (!chatId) return Promise.reject(new Error('Telegram chat ID yo‘q'));
+      if (/^@/.test(chatId) || /\D/.test(chatId)) {
+        return fetch(`https://api.telegram.org/bot${encodeURIComponent(telegramConfig.botToken)}/getChat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: chatId })
+        }).then(res => res.json()).then(data => {
+          if (!data.ok) throw new Error(data.description || 'getChat xatoligi');
+          return String(data.result.id);
         });
       }
-    });
-  });
-}
+      return Promise.resolve(chatId);
+    }
 
-function searchProduct() {
-  const query = document.getElementById("search").value.toLowerCase();
-  const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-  showProducts(filtered);
-}
+    function sendOrderToTelegram(message) {
+      return resolveTelegramChatId().then(resolvedChatId => {
+        return fetch(`https://api.telegram.org/bot${encodeURIComponent(telegramConfig.botToken)}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: resolvedChatId, text: message })
+        }).then(res => {
+          if (!res.ok) return res.json().then(data => Promise.reject(new Error(data.description || 'Telegram xatoligi')));
+        });
+      });
+    }
 
-function filterByCategory() {
-  const category = document.getElementById("categoryFilter").value;
-  const query = document.getElementById("search").value.toLowerCase();
-
-  let filtered = products;
-  if (category !== "all") {
-    filtered = filtered.filter(p => p.category === category);
-  }
-  if (query) {
-    filtered = filtered.filter(p => p.name.toLowerCase().includes(query));
-  }
-  showProducts(filtered);
-}
-
-document.getElementById("floatingLogo").addEventListener("click", () => {
-  document.getElementById("search").focus();
-});
-
-showProducts(products);
-showCart();
-setupFloatingSearchButtonDrag();
-</script>
+    showProducts(products);
+    showCart();
+  </script>
 </body>
 </html>
