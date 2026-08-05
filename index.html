@@ -2,51 +2,95 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Do‘konim</title>
   <style>
     body {
-      font-family: Arial;
-      background: #f0f2f5;
+      font-family: Inter, Arial, sans-serif;
+      background: linear-gradient(180deg, #ecf5ff 0%, #f7fafc 60%, #f0f2f5 100%);
       margin: 0;
       padding: 20px;
+      color: #213547;
     }
 
     h1 {
       text-align: center;
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 0.03em;
+      color: #19692d;
+    }
+
+    .page-header {
+      max-width: 1100px;
+      margin: 0 auto 20px;
+      padding: 20px 0;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 18px;
     }
 
     #products {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-      margin-bottom: 220px; /* savat pastda joylashgani uchun bo‘sh joy */
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      margin: 0 auto 240px;
+      max-width: 1200px;
     }
 
     .product {
-      background: white;
-      padding: 10px;
-      border-radius: 15px;
+      background: #ffffff;
+      padding: 18px 16px;
+      border-radius: 24px;
       text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 18px 50px rgba(42, 91, 84, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(42, 91, 84, 0.12);
     }
 
     .product img {
       width: 100%;
-      height: 150px;
+      height: 180px;
       object-fit: contain;
-      border-radius: 10px;
-      background: #fff;
+      border-radius: 16px;
+      background: #f9fbff;
+      margin-bottom: 14px;
+    }
+
+    .product h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      color: #1c3c2a;
+    }
+
+    .product p {
+      margin: 0 0 16px;
+      color: #5a6a72;
+      font-weight: 600;
     }
 
     button {
-      background: #4CAF50;
+      background: #1f7f35;
       color: white;
       border: none;
-      padding: 8px 12px;
-      border-radius: 8px;
+      padding: 12px 16px;
+      border-radius: 14px;
       cursor: pointer;
-      margin-top: 5px;
+      font-weight: 600;
+      transition: background 0.2s ease;
     }
 
     button:hover {
@@ -54,77 +98,167 @@
     }
 
     input, select {
-      display: block;
-      margin: 10px auto;
-      padding: 8px;
-      width: 200px;
+      display: inline-flex;
+      margin: 0;
+      padding: 12px 14px;
+      width: 230px;
+      border: 1px solid rgba(28, 60, 42, 0.14);
+      border-radius: 14px;
+      background: #ffffff;
+      font-size: 0.95rem;
+      color: #22303a;
+      box-shadow: inset 0 1px 2px rgba(31, 79, 39, 0.06);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #56b36b;
+      box-shadow: 0 0 0 4px rgba(86, 179, 107, 0.12);
+    }
+
+    .controls input {
+      width: min(320px, 100%);
+    }
+
+    .controls select {
+      width: min(220px, 100%);
     }
 
     /* Telefon uchun maxsus */
+    @media (max-width: 850px) {
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .controls input,
+      .controls select {
+        width: 100%;
+      }
+    }
+
     @media (max-width: 600px) {
       #products {
-        grid-template-columns: repeat(2, 1fr); /* Telefon ekranda 2 tadan */
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      body {
+        padding: 14px;
+      }
+
+      #cartContainer {
+        bottom: 12px;
+        left: 12px;
+        right: 12px;
+        padding: 16px;
+        max-height: 300px;
+      }
+
+      #cartContainer li {
+        padding: 8px 10px;
       }
     }
 
     /* Savat pastda fixed va scroll */
     #cartContainer {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #fff;
-      border-top: 3px solid #4CAF50;
-      padding: 10px;
-      box-shadow: 0 -2px 15px rgba(0,0,0,0.2);
-      max-height: 180px;   /* balandlik cheklangan */
-      overflow-y: auto;    /* scroll qo‘shildi */
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      background: rgba(250, 255, 247, 0.98);
+      border: 1px solid rgba(75, 178, 93, 0.18);
+      border-radius: 26px;
+      padding: 18px 20px;
+      box-shadow: 0 24px 70px rgba(15, 62, 31, 0.12);
+      max-height: 260px;
+      overflow-y: auto;
+      backdrop-filter: blur(12px);
     }
     #cartContainer h2 {
-      margin: 0;
-      font-size: 18px;
-      color: #4CAF50;
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+      color: #1f7f35;
     }
     #cartContainer ul {
-      padding-left: 20px;
-      margin: 5px 0;
+      padding-left: 0;
+      margin: 0 0 12px;
+      list-style: none;
     }
     #cartContainer li {
-      margin-bottom: 5px;
-      font-size: 14px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      color: #2f4035;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: #f7fdf4;
+      border: 1px solid rgba(39, 117, 59, 0.08);
+    }
+
+    #cartContainer label,
+    #cartContainer select,
+    #cartContainer input,
+    #cartContainer button {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    #cartContainer select,
+    #cartContainer input {
+      margin: 8px 0;
+    }
+
+    #cartContainer button {
+      margin-top: 10px;
+      background: #1f7f35;
+      padding: 14px;
+      border-radius: 16px;
+      font-size: 1rem;
     }
 
     /* Qidiruv tugmasi (kattaroq pastda) */
     #floatingLogo {
       position: fixed;
-      bottom: 200px; /* savatdan yuqorida */
-      right: 20px;
-      background: #4CAF50;
+      bottom: 210px; /* savatdan yuqorida */
+      right: 26px;
+      background: #1f7f35;
       color: white;
       padding: 18px;
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.3);
-      font-size: 32px;   /* kattaroq belgi */
+      box-shadow: 0 24px 40px rgba(39, 117, 59, 0.25);
+      font-size: 28px;
       text-align: center;
+      transition: transform 0.15s ease, background 0.15s ease;
     }
     #floatingLogo:hover {
-      background: #45a049;
+      background: #22964a;
+      transform: scale(1.05);
     }
   </style>
 </head>
 
 <body>
 
-<h1>🛒 Do‘kon</h1>
-
-<input type="text" id="search" placeholder="Qidirish..." onkeyup="searchProduct()">
-<select id="categoryFilter" onchange="filterByCategory()">
-  <option value="all">Barchasi</option>
-  <option value="ichimlik">Ichimliklar</option>
-  <option value="shirinlik">Shirinliklar</option>
-  <option value="ro'zg'or">Ro‘zg‘or</option>
-</select>
+<div class="page-header">
+  <h1>🛒 Do‘kon</h1>
+  <div class="controls">
+    <input type="text" id="search" placeholder="Qidirish..." onkeyup="searchProduct()">
+    <select id="categoryFilter" onchange="filterByCategory()">
+      <option value="all">Barchasi</option>
+      <option value="ichimlik">Ichimliklar</option>
+      <option value="shirinlik">Shirinliklar</option>
+      <option value="ro'zg'or">Ro‘zg‘or</option>
+    </select>
+  </div>
+</div>
 
 <div id="products"></div>
 
@@ -132,6 +266,12 @@
 <div id="cartContainer">
   <h2>🧺 Savat</h2>
   <ul id="cart"></ul>
+  <label for="deliveryMethod">Yetkazib berish:</label>
+  <select id="deliveryMethod" onchange="showCart()">
+    <option value="pickup">Do‘kondan olish</option>
+    <option value="delivery">Uyga yetkazib berish (+5000 so‘m)</option>
+  </select>
+  <input type="text" id="deliveryAddress" placeholder="Manzil (agar yetkazib berish)" />
   <button onclick="order()">Buyurtma berish</button>
 </div>
 
@@ -176,6 +316,7 @@ let products = [
   { name: "Olivia", price: 9000, img: "olivia.jpg", category: "ro'zg'or" }
 ];
 
+const defaultImg = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23ececec'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-family='Arial,Helvetica,sans-serif' font-size='18'%3ENo+image%3C/text%3E%3C/svg%3E";
 let cart = [];
 
 function showProducts(list) {
@@ -183,7 +324,7 @@ function showProducts(list) {
   list.forEach((p, i) => {
     html += `
       <div class="product">
-        <img src="${p.img}" alt="${p.name}">
+        <img src="${p.img || defaultImg}" onerror="this.onerror=null;this.src='${defaultImg}'" alt="${p.name}">
         <h3>${p.name}</h3>
         <p>${p.price} so‘m</p>
         <button onclick="addToCart(${i})">Savatga qo‘shish</button>
@@ -192,3 +333,116 @@ function showProducts(list) {
   });
   document.getElementById("products").innerHTML = html;
 }
+
+function getDeliveryFee() {
+  return document.getElementById("deliveryMethod").value === "delivery" ? 5000 : 0;
+}
+
+function showCart() {
+  const cartList = document.getElementById("cart");
+  if (cart.length === 0) {
+    cartList.innerHTML = '<li>Savat bo‘sh</li>';
+    return;
+  }
+
+  let cartHtml = "";
+  let subtotal = 0;
+  cart.forEach((item, index) => {
+    const lineTotal = item.price * item.quantity;
+    subtotal += lineTotal;
+    cartHtml += `
+      <li>
+        ${item.name} - ${item.price} so‘m x ${item.quantity} = ${lineTotal} so‘m
+        <button onclick="changeQuantity(${index}, 1)">+</button>
+        <button onclick="changeQuantity(${index}, -1)">-</button>
+        <button onclick="removeFromCart(${index})">O‘chirish</button>
+      </li>
+    `;
+  });
+
+  const deliveryFee = getDeliveryFee();
+  const total = subtotal + deliveryFee;
+  cartHtml += `<li><strong>Subtotal: ${subtotal} so‘m</strong></li>`;
+  cartHtml += `<li><strong>Yetkazib berish: ${deliveryFee} so‘m</strong></li>`;
+  cartHtml += `<li><strong>Jami: ${total} so‘m</strong></li>`;
+  cartList.innerHTML = cartHtml;
+}
+
+function addToCart(index) {
+  const product = products[index];
+  const existing = cart.find(item => item.name === product.name);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+  showCart();
+}
+
+function changeQuantity(index, delta) {
+  cart[index].quantity += delta;
+  if (cart[index].quantity <= 0) {
+    cart.splice(index, 1);
+  }
+  showCart();
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  showCart();
+}
+
+function order() {
+  if (cart.length === 0) {
+    alert("Savat bo‘sh. Iltimos, avval mahsulot qo‘shing.");
+    return;
+  }
+
+  const deliveryMethod = document.getElementById("deliveryMethod").value;
+  const address = document.getElementById("deliveryAddress").value.trim();
+  if (deliveryMethod === "delivery" && !address) {
+    alert("Yetkazib berish uchun manzil kiriting.");
+    return;
+  }
+
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const deliveryFee = getDeliveryFee();
+  const total = subtotal + deliveryFee;
+  const methodText = deliveryMethod === "delivery" ? `Yetkazib berish manzil: ${address}` : "Do‘kondan olish";
+
+  alert(`Buyurtmangiz qabul qilindi!\n${methodText}\nJami: ${total} so‘m.`);
+  cart = [];
+  document.getElementById("deliveryAddress").value = "";
+  document.getElementById("deliveryMethod").value = "pickup";
+  showCart();
+}
+
+function searchProduct() {
+  const query = document.getElementById("search").value.toLowerCase();
+  const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+  showProducts(filtered);
+}
+
+function filterByCategory() {
+  const category = document.getElementById("categoryFilter").value;
+  const query = document.getElementById("search").value.toLowerCase();
+
+  let filtered = products;
+  if (category !== "all") {
+    filtered = filtered.filter(p => p.category === category);
+  }
+  if (query) {
+    filtered = filtered.filter(p => p.name.toLowerCase().includes(query));
+  }
+  showProducts(filtered);
+}
+
+document.getElementById("floatingLogo").addEventListener("click", () => {
+  document.getElementById("search").focus();
+});
+
+showProducts(products);
+showCart();
+</script>
+</body>
+</html>
