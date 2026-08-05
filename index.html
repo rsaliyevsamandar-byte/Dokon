@@ -20,7 +20,7 @@
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 15px;
       margin-top: 20px;
-      margin-bottom: 200px; /* savat pastda joylashgani uchun bo‘sh joy */
+      margin-bottom: 220px; /* savat pastda joylashgani uchun bo‘sh joy */
     }
 
     .product {
@@ -74,25 +74,36 @@
       left: 0;
       right: 0;
       background: #fff;
-      border-top: 2px solid #ccc;
+      border-top: 3px solid #4CAF50;
       padding: 10px;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-      max-height: 200px;
+      box-shadow: 0 -2px 15px rgba(0,0,0,0.2);
+      max-height: 220px;
       overflow-y: auto;
     }
+    #cartContainer h2 {
+      margin: 0;
+      font-size: 18px;
+      color: #4CAF50;
+    }
+    #cartContainer ul {
+      padding-left: 20px;
+    }
+    #cartContainer li {
+      margin-bottom: 5px;
+    }
 
-    /* Qidiruv tugmasi (kichik logo) */
+    /* Qidiruv tugmasi (kattaroq logo pastda) */
     #floatingLogo {
       position: fixed;
-      bottom: 250px; /* savatdan yuqorida */
-      right: 15px;
+      bottom: 80px; /* savatdan biroz yuqorida */
+      right: 20px;
       background: #4CAF50;
       color: white;
-      padding: 10px;
+      padding: 15px;
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-      font-size: 20px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+      font-size: 28px;
       text-align: center;
     }
     #floatingLogo:hover {
@@ -122,24 +133,54 @@
   <button onclick="order()">Buyurtma berish</button>
 </div>
 
-<!-- Qidiruv tugmasi (kichik logo) -->
+<!-- Qidiruv tugmasi (kattaroq pastda) -->
 <div id="floatingLogo">🔍</div>
 
 <script>
 let products = [
+  // Ichimliklar
   { name: "Kola 2L", price: 20000, img: "kola.jpg", category: "ichimlik" },
-  { name: "Pepsi 1L", price: 12000, img: "pepsi.jpg", category: "ichimlik" },
-  { name: "Fanta 0.5L", price: 8000, img: "fanta.jpg", category: "ichimlik" },
-  { name: "Sprite 1.5L", price: 15000, img: "sprite.jpg", category: "ichimlik" },
-  { name: "Lipton 0.5L", price: 8000, img: "lipton.jpg", category: "ichimlik" },
-  { name: "Fuse Tea 1L", price: 12000, img: "fusetea.jpg", category: "ichimlik" },
+  { name: "Kola 1L", price: 12000, img: "kola.jpg", category: "ichimlik" },
+  { name: "Pepsi 2L", price: 20000, img: "pepsi.jpg", category: "ichimlik" },
+  { name: "Pepsi 0.5L", price: 8000, img: "pepsi.jpg", category: "ichimlik" },
+  { name: "Fanta 1.5L", price: 15000, img: "fanta.jpg", category: "ichimlik" },
+  { name: "Sprite 0.5L", price: 8000, img: "sprite.jpg", category: "ichimlik" },
+  { name: "Lipton 1.5L", price: 15000, img: "lipton.jpg", category: "ichimlik" },
+  { name: "Fuse Tea 0.5L", price: 8000, img: "fusetea.jpg", category: "ichimlik" },
+  { name: "Gorilla", price: 13000, img: "gorilla.jpg", category: "ichimlik" },
+  { name: "Flash", price: 13000, img: "flash.jpg", category: "ichimlik" },
+  { name: "18+", price: 13000, img: "18plus.jpg", category: "ichimlik" },
+  { name: "Moxito", price: 13000, img: "moxito.jpg", category: "ichimlik" },
+  { name: "Gazli suv 1.5L", price: 6000, img: "gazlisuv.jpg", category: "ichimlik" },
+  { name: "Bez gaz suv 1L", price: 5000, img: "bezgaz.jpg", category: "ichimlik" },
+
+  // Shirinliklar
   { name: "Snickers", price: 9000, img: "snickers.jpg", category: "shirinlik" },
   { name: "KitKat", price: 10000, img: "kitkat.jpg", category: "shirinlik" },
+  { name: "Twix", price: 9500, img: "twix.jpg", category: "shirinlik" },
   { name: "Orbit", price: 6000, img: "orbit.jpg", category: "shirinlik" },
+  { name: "Styx", price: 4000, img: "styx.jpg", category: "shirinlik" },
+  { name: "Kango", price: 2000, img: "kango.jpg", category: "shirinlik" },
+  { name: "Chupa Chups", price: 1000, img: "chupachups.jpg", category: "shirinlik" },
+  { name: "Shar", price: 1000, img: "shar.jpg", category: "shirinlik" },
+  { name: "Shakar", price: 16000, img: "shakar.jpg", category: "shirinlik" },
+  { name: "Qand", price: 16000, img: "qand.jpg", category: "shirinlik" },
+
+  // Ro‘zg‘or mahsulotlari
   { name: "Kir sovun", price: 6000, img: "kirsovun.jpg", category: "ro'zg'or" },
+  { name: "Parashok Aprel", price: 6000, img: "aprel.jpg", category: "ro'zg'or" },
+  { name: "Bavi", price: 10000, img: "bavi.jpg", category: "ro'zg'or" },
+  { name: "Kapsula", price: 5000, img: "kapsula.jpg", category: "ro'zg'or" },
+  { name: "Xitoy sovun", price: 15000, img: "xitojsovun.jpg", category: "ro'zg'or" },
   { name: "Pista yog' 1L", price: 23000, img: "pistayog1l.jpg", category: "ro'zg'or" },
+  { name: "Pista yog' 5L", price: 105000, img: "pistayog5l.jpg", category: "ro'zg'or" },
+  { name: "Clear katta", price: 38000, img: "clearbig.jpg", category: "ro'zg'or" },
+  { name: "Colgate 100ml", price: 17000, img: "colgate100.jpg", category: "ro'zg'or" },
+  { name: "Moloko 350gr", price: 13000, img: "moloko350.jpg", category: "ro'zg'or" },
+  { name: "Makaron 1kg", price: 12000, img: "makaron1.jpg", category: "ro'zg'or" },
   { name: "Olivia", price: 9000, img: "olivia.jpg", category: "ro'zg'or" }
 ];
+
 
 let cart = [];
 
@@ -246,4 +287,3 @@ document.getElementById("floatingLogo").onclick = function() {
 showProducts(products);
 </script>
 
-</
