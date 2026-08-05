@@ -22,9 +22,15 @@
     }
 
     .page-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
       max-width: 1100px;
       margin: 0 auto 20px;
       padding: 20px 0;
+      background: rgba(236, 245, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(31, 79, 39, 0.08);
     }
 
     .controls {
@@ -291,7 +297,7 @@
     /* Qidiruv tugmasi (kattaroq pastda) */
     #floatingLogo {
       position: fixed;
-      bottom: 210px; /* savatdan yuqorida */
+      bottom: 26px;
       right: 26px;
       background: #1f7f35;
       color: white;
@@ -302,10 +308,15 @@
       font-size: 28px;
       text-align: center;
       transition: transform 0.15s ease, background 0.15s ease;
+      z-index: 25;
     }
     #floatingLogo:hover {
       background: #22964a;
       transform: scale(1.05);
+    }
+    #floatingLogo:active {
+      transform: scale(0.95);
+      box-shadow: 0 12px 20px rgba(39, 117, 59, 0.25);
     }
   </style>
 </head>
