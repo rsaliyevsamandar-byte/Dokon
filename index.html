@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Do‘konim</title>
-
   <style>
     body {
       font-family: Arial;
@@ -21,6 +20,7 @@
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 15px;
       margin-top: 20px;
+      margin-bottom: 200px; /* savat pastda joylashgani uchun bo‘sh joy */
     }
 
     .product {
@@ -59,6 +59,45 @@
       padding: 8px;
       width: 200px;
     }
+
+    /* Telefon uchun maxsus */
+    @media (max-width: 600px) {
+      #products {
+        grid-template-columns: repeat(2, 1fr); /* Telefon ekranda 2 tadan */
+      }
+    }
+
+    /* Savat pastda fixed */
+    #cartContainer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 2px solid #ccc;
+      padding: 10px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    /* Qidiruv tugmasi (kichik logo) */
+    #floatingLogo {
+      position: fixed;
+      bottom: 250px; /* savatdan yuqorida */
+      right: 15px;
+      background: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      font-size: 20px;
+      text-align: center;
+    }
+    #floatingLogo:hover {
+      background: #45a049;
+    }
   </style>
 </head>
 
@@ -71,107 +110,57 @@
   <option value="all">Barchasi</option>
   <option value="ichimlik">Ichimliklar</option>
   <option value="shirinlik">Shirinliklar</option>
+  <option value="ro'zg'or">Ro‘zg‘or</option>
 </select>
 
 <div id="products"></div>
 
-<h2>🧺 Savat</h2>
-<ul id="cart"></ul>
+<!-- Savat pastda fixed -->
+<div id="cartContainer">
+  <h2>🧺 Savat</h2>
+  <ul id="cart"></ul>
+  <button onclick="order()">Buyurtma berish</button>
+</div>
 
-<button onclick="order()">Buyurtma berish</button>
+<!-- Qidiruv tugmasi (kichik logo) -->
+<div id="floatingLogo">🔍</div>
 
 <script>
 let products = [
-// Kola
-{ name: "Kola 2L", price: 20000, img: "kola.jpg", category: "ichimlik" },
-{ name: "Kola 1.5L", price: 15000, img: "kola.jpg", category: "ichimlik" },
-{ name: "Kola 1L", price: 12000, img: "kola.jpg", category: "ichimlik" },
-{ name: "Kola 0.5L", price: 8000, img: "kola.jpg", category: "ichimlik" },
+  // Ichimliklar
+  { name: "Kola 2L", price: 20000, img: "kola.jpg", category: "ichimlik" },
+  { name: "Pepsi 1L", price: 12000, img: "pepsi.jpg", category: "ichimlik" },
+  { name: "Fanta 0.5L", price: 8000, img: "fanta.jpg", category: "ichimlik" },
+  { name: "Sprite 1.5L", price: 15000, img: "sprite.jpg", category: "ichimlik" },
+  { name: "Lipton 0.5L", price: 8000, img: "lipton.jpg", category: "ichimlik" },
+  { name: "Fuse Tea 1L", price: 12000, img: "fusetea.jpg", category: "ichimlik" },
+  { name: "Gorilla", price: 13000, img: "gorilla.jpg", category: "ichimlik" },
+  { name: "Flash", price: 13000, img: "flash.jpg", category: "ichimlik" },
+  { name: "18+", price: 13000, img: "18plus.jpg", category: "ichimlik" },
+  { name: "Moxito", price: 13000, img: "moxito.jpg", category: "ichimlik" },
+  { name: "Gazli suv 1L", price: 5000, img: "gazlisuv.jpg", category: "ichimlik" },
+  { name: "Bez gaz suv 0.5L", price: 4000, img: "bezgaz.jpg", category: "ichimlik" },
 
-// Pepsi
-{ name: "Pepsi 2L", price: 20000, img: "pepsi.jpg", category: "ichimlik" },
-{ name: "Pepsi 1.5L", price: 15000, img: "pepsi.jpg", category: "ichimlik" },
-{ name: "Pepsi 1L", price: 12000, img: "pepsi.jpg", category: "ichimlik" },
-{ name: "Pepsi 0.5L", price: 8000, img: "pepsi.jpg", category: "ichimlik" },
+  // Shirinliklar
+  { name: "Snickers", price: 9000, img: "snickers.jpg", category: "shirinlik" },
+  { name: "KitKat", price: 10000, img: "kitkat.jpg", category: "shirinlik" },
+  { name: "Twix", price: 9500, img: "twix.jpg", category: "shirinlik" },
+  { name: "Orbit", price: 6000, img: "orbit.jpg", category: "shirinlik" },
+  { name: "Chupa Chups", price: 1000, img: "chupachups.jpg", category: "shirinlik" },
+  { name: "Shar", price: 1000, img: "shar.jpg", category: "shirinlik" },
+  { name: "Shakar", price: 16000, img: "shakar.jpg", category: "shirinlik" },
+  { name: "Qand", price: 16000, img: "qand.jpg", category: "shirinlik" },
 
-// Fanta
-{ name: "Fanta 2L", price: 20000, img: "fanta.jpg", category: "ichimlik" },
-{ name: "Fanta 1.5L", price: 15000, img: "fanta.jpg", category: "ichimlik" },
-{ name: "Fanta 1L", price: 12000, img: "fanta.jpg", category: "ichimlik" },
-{ name: "Fanta 0.5L", price: 8000, img: "fanta.jpg", category: "ichimlik" },
-
-// Sprite
-{ name: "Sprite 2L", price: 20000, img: "sprite.jpg", category: "ichimlik" },
-{ name: "Sprite 1.5L", price: 15000, img: "sprite.jpg", category: "ichimlik" },
-{ name: "Sprite 1L", price: 12000, img: "sprite.jpg", category: "ichimlik" },
-{ name: "Sprite 0.5L", price: 8000, img: "sprite.jpg", category: "ichimlik" },
-
-// Lipton
-{ name: "Lipton 2L", price: 20000, img: "lipton.jpg", category: "ichimlik" },
-{ name: "Lipton 1.5L", price: 15000, img: "lipton.jpg", category: "ichimlik" },
-{ name: "Lipton 1L", price: 12000, img: "lipton.jpg", category: "ichimlik" },
-{ name: "Lipton 0.5L", price: 8000, img: "lipton.jpg", category: "ichimlik" },
-
-// Fuse Tea
-{ name: "Fuse Tea 2L", price: 20000, img: "fusetea.jpg", category: "ichimlik" },
-{ name: "Fuse Tea 1.5L", price: 15000, img: "fusetea.jpg", category: "ichimlik" },
-{ name: "Fuse Tea 1L", price: 12000, img: "fusetea.jpg", category: "ichimlik" },
-{ name: "Fuse Tea 0.5L", price: 8000, img: "fusetea.jpg", category: "ichimlik" },
-
-// Energiya ichimliklari
-{ name: "Gorilla", price: 13000, img: "gorilla.jpg", category: "ichimlik" },
-{ name: "Flash", price: 13000, img: "flash.jpg", category: "ichimlik" },
-{ name: "18+", price: 13000, img: "18plus.jpg", category: "ichimlik" },
-{ name: "Moxito", price: 13000, img: "moxito.jpg", category: "ichimlik" },
-
-// Gazli suv
-{ name: "Gazli suv 1.5L", price: 6000, img: "gazlisuv.jpg", category: "ichimlik" },
-{ name: "Gazli suv 1L", price: 5000, img: "gazlisuv.jpg", category: "ichimlik" },
-{ name: "Gazli suv 0.5L", price: 4000, img: "gazlisuv.jpg", category: "ichimlik" },
-
-// Bez gaz suv
-{ name: "Bez gaz suv 1.5L", price: 6000, img: "bezgaz.jpg", category: "ichimlik" },
-{ name: "Bez gaz suv 1L", price: 5000, img: "bezgaz.jpg", category: "ichimlik" },
-{ name: "Bez gaz suv 0.5L", price: 4000, img: "bezgaz.jpg", category: "ichimlik" },
-
-// Tez tayyor ovqatlar
-{ name: "Big Bon", price: 5000, img: "bigbon.jpg", category: "shirinlik" },
-{ name: "Hot Lunch", price: 5000, img: "hotlunch.jpg", category: "shirinlik" },
-{ name: "Rollton", price: 5000, img: "rollton.jpg", category: "shirinlik" },
-
-// Shirinliklar
-{ name: "Chupa Chups", price: 1000, img: "chupachups.jpg", category: "shirinlik" },
-{ name: "Chupa Chups 500", price: 500, img: "chupachups500.jpg", category: "shirinlik" },
-{ name: "Shar", price: 1000, img: "shar.jpg", category: "shirinlik" },
-{ name: "Orbit", price: 6000, img: "orbit.jpg", category: "shirinlik" },
-{ name: "Styx", price: 4000, img: "styx.jpg", category: "shirinlik" },
-{ name: "Kango", price: 2000, img: "kango.jpg", category: "shirinlik" },
-
-// Asosiy mahsulotlar
-{ name: "Guruch Lazer", price: 20000, img: "guruchlazer.jpg", category: "shirinlik" },
-{ name: "Turon Oliy Nav 1kg", price: 13000, img: "turon.jpg", category: "shirinlik" },
-
-// Sovun va Soda
-{ name: "Sovun", price: 5000, img: "sovun.jpg", category: "shirinlik" },
-{ name: "Soda 1L", price: 4000, img: "soda1l.jpg", category: "ichimlik" },
-{ name: "Soda 0.5L", price: 2500, img: "soda05l.jpg", category: "ichimlik" },
-
-// Shirinliklar
-{ name: "Snickers", price: 9000, img: "snickers.jpg", category: "shirinlik" },
-{ name: "KitKat", price: 10000, img: "kitkat.jpg", category: "shirinlik" },
-{ name: "Twix", price: 9500, img: "twix.jpg", category: "shirinlik" },
-{ name: "Shakar", price: 16000, img: "shakar.jpg", category: "shirinlik" },
-{ name: "Qand", price: 16000, img: "qand.jpg", category: "shirinlik" },
-
-// Ro'zg'or mahsulotlari
-{ name: "Kir sovun", price: 6000, img: "kirsovun.jpg", category: "ro'zg'or" },
-{ name: "Parashok Aprel", price: 6000, img: "aprel.jpg", category: "ro'zg'or" },
-{ name: "Bavi", price: 10000, img: "bavi.jpg", category: "ro'zg'or" },
-{ name: "Kapsula", price: 5000, img: "kapsula.jpg", category: "ro'zg'or" },
-{ name: "Xitoy sovun", price: 15000, img: "xitojsovun.jpg", category: "ro'zg'or" },
-{ name: "Pista yog' 1L", price: 23000, img: "pistayog1l.jpg", category: "ro'zg'or" },
-{ name: "Pista yog' 5L", price: 105000, img: "pistayog5l.jpg", category: "ro'zg'or"},
-
+  // Ro‘zg‘or
+  { name: "Kir sovun", price: 6000, img: "kirsovun.jpg", category: "ro'zg'or" },
+  { name: "Parashok Aprel", price: 6000, img: "aprel.jpg", category: "ro'zg'or" },
+  { name: "Pista yog' 1L", price: 23000, img: "pistayog1l.jpg", category: "ro'zg'or" },
+  { name: "Pista yog' 5L", price: 105000, img: "pistayog5l.jpg", category: "ro'zg'or" },
+  { name: "Clear katta", price: 38000, img: "clearbig.jpg", category: "ro'zg'or" },
+  { name: "Colgate 100ml", price: 17000, img: "colgate100.jpg", category: "ro'zg'or" },
+  { name: "Moloko 350gr", price: 13000, img: "moloko350.jpg", category: "ro'zg'or" },
+  { name: "Makaron 1kg", price: 12000, img: "makaron1.jpg", category: "ro'zg'or" },
+  { name: "Olivia", price: 9000, img: "olivia.jpg", category: "ro'zg'or" }
 ];
 
 let cart = [];
@@ -192,87 +181,4 @@ function showProducts(list) {
 }
 
 function addToCart(i) {
-  let existing = cart.find(item => item.name === products[i].name);
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    cart.push({ ...products[i], qty: 1 });
-  }
-  showCart();
 }
-
-function showCart() {
-  let html = "";
-  let total = 0;
-
-  cart.forEach((p, index) => {
-    html += `
-      <li>
-        ${p.name} - ${p.price} so‘m x ${p.qty}
-        <button onclick="increaseQty(${index})">➕</button>
-        <button onclick="decreaseQty(${index})">➖</button>
-        <button onclick="removeFromCart(${index})">❌ O‘chirish</button>
-      </li>
-    `;
-    total += p.price * p.qty;
-  });
-
-  html += `<h3>Jami: ${total} so‘m</h3>`;
-  document.getElementById("cart").innerHTML = html;
-}
-
-function increaseQty(i) {
-  cart[i].qty += 1;
-  showCart();
-}
-
-function decreaseQty(i) {
-  if (cart[i].qty > 1) {
-    cart[i].qty -= 1;
-  } else {
-    cart.splice(i, 1);
-  }
-  showCart();
-}
-
-function removeFromCart(i) {
-  cart.splice(i, 1);
-  showCart();
-}
-
-function searchProduct() {
-  let value = document.getElementById("search").value.toLowerCase();
-  let filtered = products.filter(p => p.name.toLowerCase().includes(value));
-  showProducts(filtered);
-}
-
-function filterByCategory() {
-  let cat = document.getElementById("categoryFilter").value;
-  if (cat === "all") {
-    showProducts(products);
-  } else {
-    let filtered = products.filter(p => p.category === cat);
-    showProducts(filtered);
-  }
-}
-
-function order() {
-  let text = "Salom, buyurtma:%0A";
-  let total = 0;
-
-  cart.forEach(p => {
-    text += `${p.name} x${p.qty} - ${p.price * p.qty} so‘m%0A`;
-    total += p.price * p.qty;
-  });
-
-  text += `%0AJami: ${total} so‘m`;
-
-  window.open("https://t.me/rsaliyev1?text=" + text);
-}
-
-
-showProducts(products);
-</script>
-
-</body>
-</html>
