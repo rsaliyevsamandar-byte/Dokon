@@ -41,20 +41,44 @@
       margin-top: 18px;
     }
 
-    .search-area {
+    #searchWidget {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+      width: min(600px, calc(100vw - 32px));
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 24px;
+      padding: 12px 16px 16px;
+      box-shadow: 0 24px 50px rgba(15, 62, 31, 0.15);
+      cursor: grab;
+      user-select: none;
+    }
+
+    #searchWidget.grabbing {
+      cursor: grabbing;
+    }
+
+    #searchHandle {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1f7f35;
+      text-align: center;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .controls {
       justify-content: flex-start;
-      gap: 14px;
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
     }
 
-    .search-area input {
-      flex: 1 1 300px;
+    .controls input {
+      flex: 1 1 260px;
     }
 
-    .search-area select {
-      flex: 0 0 180px;
+    .controls select {
+      flex: 0 0 170px;
     }
 
     #products {
@@ -328,10 +352,8 @@
     }
     #floatingLogo:hover {
       background: #22964a;
-      transform: scale(1.05);
     }
     #floatingLogo:active {
-      transform: scale(0.95);
       box-shadow: 0 12px 20px rgba(39, 117, 59, 0.25);
     }
   </style>
@@ -341,7 +363,13 @@
 
 <div class="page-header">
   <h1>🛒 Do‘kon</h1>
-  <div class="controls search-area">
+</div>
+
+<div id="searchWidget">
+  <div id="searchHandle">Qidiruvni ushlab, kerakli joyga suring</div>
+  <div class="controls">
+    <input type="text" id="search" placeholder="Qidirish..." onkeyup="searchProduct()">
+    <select id="categoryFilter" onchange="filterByCategory()">
       <option value="all">Barchasi</option>
       <option value="ichimlik">Ichimliklar</option>
       <option value="shirinlik">Shirinliklar</option>
@@ -430,6 +458,51 @@ function showProducts(list) {
     `;
   });
   document.getElementById("products").innerHTML = html;
+}
+
+function setupSearchDrag() {
+  const widget = document.getElementById('searchWidget');
+  const handle = document.getElementById('searchHandle');
+  let isDragging = false;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  const startDrag = event => {
+    event.preventDefault();
+    const point = event.touches ? event.touches[0] : event;
+    isDragging = true;
+    widget.classList.add('grabbing');
+    offsetX = point.clientX - widget.offsetLeft;
+    offsetY = point.clientY - widget.offsetTop;
+  };
+
+  const moveDrag = event => {
+    if (!isDragging) return;
+    event.preventDefault();
+    const point = event.touches ? event.touches[0] : event;
+    let x = point.clientX - offsetX;
+    let y = point.clientY - offsetY;
+    const maxX = window.innerWidth - widget.offsetWidth - 16;
+    const maxY = window.innerHeight - widget.offsetHeight - 16;
+    x = Math.min(Math.max(16, x), maxX);
+    y = Math.min(Math.max(16, y), maxY);
+    widget.style.left = `${x}px`;
+    widget.style.top = `${y}px`;
+    widget.style.transform = 'none';
+  };
+
+  const stopDrag = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    widget.classList.remove('grabbing');
+  };
+
+  handle.addEventListener('mousedown', startDrag);
+  handle.addEventListener('touchstart', startDrag, { passive: false });
+  window.addEventListener('mousemove', moveDrag);
+  window.addEventListener('touchmove', moveDrag, { passive: false });
+  window.addEventListener('mouseup', stopDrag);
+  window.addEventListener('touchend', stopDrag);
 }
 
 function getDeliveryFee() {
@@ -614,6 +687,7 @@ document.getElementById("floatingLogo").addEventListener("click", () => {
 
 showProducts(products);
 showCart();
+setupSearchDrag();
 </script>
 </body>
 </html>
