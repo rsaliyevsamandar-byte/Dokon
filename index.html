@@ -41,6 +41,22 @@
       margin-top: 18px;
     }
 
+    .search-area {
+      justify-content: flex-start;
+      gap: 14px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .search-area input {
+      flex: 1 1 300px;
+    }
+
+    .search-area select {
+      flex: 0 0 180px;
+    }
+
     #products {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -325,9 +341,7 @@
 
 <div class="page-header">
   <h1>🛒 Do‘kon</h1>
-  <div class="controls">
-    <input type="text" id="search" placeholder="Qidirish..." onkeyup="searchProduct()">
-    <select id="categoryFilter" onchange="filterByCategory()">
+  <div class="controls search-area">
       <option value="all">Barchasi</option>
       <option value="ichimlik">Ichimliklar</option>
       <option value="shirinlik">Shirinliklar</option>
@@ -419,7 +433,7 @@ function showProducts(list) {
 }
 
 function getDeliveryFee() {
-  return document.getElementById("deliveryMethod").value === "delivery" ? 5000 : 0;
+  return document.getElementById("deliveryMethod").value === "delivery" ? 10000 : 0;
 }
 
 function showCart() {
