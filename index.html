@@ -127,39 +127,17 @@
 
 <script>
 let products = [
-  // Ichimliklar
   { name: "Kola 2L", price: 20000, img: "kola.jpg", category: "ichimlik" },
   { name: "Pepsi 1L", price: 12000, img: "pepsi.jpg", category: "ichimlik" },
   { name: "Fanta 0.5L", price: 8000, img: "fanta.jpg", category: "ichimlik" },
   { name: "Sprite 1.5L", price: 15000, img: "sprite.jpg", category: "ichimlik" },
   { name: "Lipton 0.5L", price: 8000, img: "lipton.jpg", category: "ichimlik" },
   { name: "Fuse Tea 1L", price: 12000, img: "fusetea.jpg", category: "ichimlik" },
-  { name: "Gorilla", price: 13000, img: "gorilla.jpg", category: "ichimlik" },
-  { name: "Flash", price: 13000, img: "flash.jpg", category: "ichimlik" },
-  { name: "18+", price: 13000, img: "18plus.jpg", category: "ichimlik" },
-  { name: "Moxito", price: 13000, img: "moxito.jpg", category: "ichimlik" },
-  { name: "Gazli suv 1L", price: 5000, img: "gazlisuv.jpg", category: "ichimlik" },
-  { name: "Bez gaz suv 0.5L", price: 4000, img: "bezgaz.jpg", category: "ichimlik" },
-
-  // Shirinliklar
   { name: "Snickers", price: 9000, img: "snickers.jpg", category: "shirinlik" },
   { name: "KitKat", price: 10000, img: "kitkat.jpg", category: "shirinlik" },
-  { name: "Twix", price: 9500, img: "twix.jpg", category: "shirinlik" },
   { name: "Orbit", price: 6000, img: "orbit.jpg", category: "shirinlik" },
-  { name: "Chupa Chups", price: 1000, img: "chupachups.jpg", category: "shirinlik" },
-  { name: "Shar", price: 1000, img: "shar.jpg", category: "shirinlik" },
-  { name: "Shakar", price: 16000, img: "shakar.jpg", category: "shirinlik" },
-  { name: "Qand", price: 16000, img: "qand.jpg", category: "shirinlik" },
-
-  // Ro‘zg‘or
   { name: "Kir sovun", price: 6000, img: "kirsovun.jpg", category: "ro'zg'or" },
-  { name: "Parashok Aprel", price: 6000, img: "aprel.jpg", category: "ro'zg'or" },
   { name: "Pista yog' 1L", price: 23000, img: "pistayog1l.jpg", category: "ro'zg'or" },
-  { name: "Pista yog' 5L", price: 105000, img: "pistayog5l.jpg", category: "ro'zg'or" },
-  { name: "Clear katta", price: 38000, img: "clearbig.jpg", category: "ro'zg'or" },
-  { name: "Colgate 100ml", price: 17000, img: "colgate100.jpg", category: "ro'zg'or" },
-  { name: "Moloko 350gr", price: 13000, img: "moloko350.jpg", category: "ro'zg'or" },
-  { name: "Makaron 1kg", price: 12000, img: "makaron1.jpg", category: "ro'zg'or" },
   { name: "Olivia", price: 9000, img: "olivia.jpg", category: "ro'zg'or" }
 ];
 
@@ -181,4 +159,91 @@ function showProducts(list) {
 }
 
 function addToCart(i) {
+  let existing = cart.find(item => item.name === products[i].name);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ ...products[i], qty: 1 });
+  }
+  showCart();
 }
+
+function showCart() {
+  let html = "";
+  let total = 0;
+
+  cart.forEach((p, index) => {
+    html += `
+      <li>
+        ${p.name} - ${p.price} so‘m x ${p.qty}
+        <button onclick="increaseQty(${index})">➕</button>
+        <button onclick="decreaseQty(${index})">➖</button>
+        <button onclick="removeFromCart(${index})">❌</button>
+      </li>
+    `;
+    total += p.price * p.qty;
+  });
+
+  html += `<h3>Jami: ${total} so‘m</h3>`;
+  document.getElementById("cart").innerHTML = html;
+}
+
+function increaseQty(i) {
+  cart[i].qty += 1;
+  showCart();
+}
+
+function decreaseQty(i) {
+  if (cart[i].qty > 1) {
+    cart[i].qty -= 1;
+  } else {
+    cart.splice(i, 1);
+  }
+  showCart();
+}
+
+function removeFromCart(i) {
+  cart.splice(i, 1);
+  showCart();
+}
+
+function searchProduct() {
+  let value = document.getElementById("search").value.toLowerCase();
+  let filtered = products.filter(p => p.name.toLowerCase().includes(value));
+  showProducts(filtered);
+}
+
+function filterByCategory() {
+  let cat = document.getElementById("categoryFilter").value;
+  if (cat === "all") {
+    showProducts(products);
+  } else {
+    let filtered = products.filter(p => p.category === cat);
+    showProducts(filtered);
+  }
+}
+
+function order() {
+  let text = "Salom, buyurtma:%0A";
+  let total = 0;
+
+  cart.forEach(p => {
+    text += `${p.name} x${p.qty} - ${p.price * p.qty} so‘m%0A`;
+    total += p.price * p.qty;
+  });
+
+  text += `%0AJami: ${total} so‘m`;
+
+  window.open("https://t.me/rsaliyev1?text=" + text);
+}
+
+// 🔍 Qidiruv tugmasi bosilganda tepaga chiqadi va input fokus bo‘ladi
+document.getElementById("floatingLogo").onclick = function() {
+  document.getElementById("search").focus();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+showProducts(products);
+</script>
+
+</
