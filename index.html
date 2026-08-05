@@ -211,6 +211,31 @@
       #products {
         grid-template-columns: repeat(1, 1fr);
       }
+
+      .page-header {
+        padding: 12px 12px;
+      }
+
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .controls input,
+      .controls select {
+        width: 100%;
+        max-width: none;
+        min-width: auto;
+      }
+
+      #floatingLogo {
+        bottom: 14px;
+        right: 14px;
+        padding: 14px;
+        font-size: 22px;
+      }
     }
 
     @media (max-width: 500px) {
@@ -455,6 +480,10 @@ function showProducts(list) {
 }
 
 function setupFloatingSearchButtonDrag() {
+  if (window.innerWidth <= 600) {
+    return; // keep the button fixed on mobile
+  }
+
   const widget = document.getElementById('floatingLogo');
   let isDragging = false;
   let offsetX = 0;
