@@ -317,6 +317,14 @@ let products = [
 ];
 
 const defaultImg = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23ececec'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-family='Arial,Helvetica,sans-serif' font-size='18'%3ENo+image%3C/text%3E%3C/svg%3E";
+
+// Telegram bot token va chat ID.
+// Endi sizning shaxsiy chat ID ishlatiladi, botga ruxsatli xabar yuboradi.
+const telegramConfig = {
+  botToken: "8998474143:AAHRwF3maPykjMmswx8hyJU3NOBenfaf-YM",
+  chatId: "8341622654"
+};
+
 let cart = [];
 
 function showProducts(list) {
@@ -410,11 +418,82 @@ function order() {
   const total = subtotal + deliveryFee;
   const methodText = deliveryMethod === "delivery" ? `Yetkazib berish manzil: ${address}` : "Do‘kondan olish";
 
-  alert(`Buyurtmangiz qabul qilindi!\n${methodText}\nJami: ${total} so‘m.`);
-  cart = [];
-  document.getElementById("deliveryAddress").value = "";
-  document.getElementById("deliveryMethod").value = "pickup";
-  showCart();
+  const message = buildTelegramMessage(cart, deliveryMethod, address, total);
+  sendOrderToTelegram(message)
+    .then(() => {
+      alert(`Buyurtmangiz qabul qilindi!\n${methodText}\nJami: ${total} so‘m.`);
+      cart = [];
+      document.getElementById("deliveryAddress").value = "";
+      document.getElementById("deliveryMethod").value = "pickup";
+      showCart();
+    })
+    .catch(error => {
+      console.error(error);
+      alert("Xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko‘ring.");
+    });
+}
+
+function buildTelegramMessage(cart, deliveryMethod, address, total) {
+  const lines = ['Yangi buyurtma:'];
+  cart.forEach(item => {
+    lines.push(`${item.name} x ${item.quantity} = ${item.price * item.quantity} so‘m`);
+  });
+  lines.push(`Jami: ${total} so‘m`);
+  lines.push(`Yetkazib berish: ${deliveryMethod === 'delivery' ? 'Ha' : 'Yo‘q'}`);
+  if (deliveryMethod === 'delivery') {
+    lines.push(`Manzil: ${address}`);
+  }
+  return lines.join('\n');
+}
+
+function resolveTelegramChatId() {
+  const chatId = String(telegramConfig.chatId || '').trim();
+  if (!chatId) {
+    return Promise.reject(new Error('Telegram chatId sozlanmagan.'));
+  }
+
+  if (/^@/.test(chatId) || /\D/.test(chatId)) {
+    const url = `https://api.telegram.org/bot${encodeURIComponent(telegramConfig.botToken)}/getChat`;
+    const body = { chat_id: chatId };
+
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }).then(response => response.json().then(data => {
+      if (!data.ok) {
+        throw new Error(data.description || 'Telegram getChat xatoligi.');
+      }
+      return String(data.result.id);
+    }))
+    .catch(err => {
+      throw new Error(`getChat xatoligi: ${err.message}`);
+    });
+  }
+
+  return Promise.resolve(chatId);
+}
+
+function sendOrderToTelegram(message) {
+  return resolveTelegramChatId().then(resolvedChatId => {
+    const url = `https://api.telegram.org/bot${encodeURIComponent(telegramConfig.botToken)}/sendMessage`;
+    const body = {
+      chat_id: resolvedChatId,
+      text: message
+    };
+
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }).then(response => {
+      if (!response.ok) {
+        return response.json().then(data => {
+          throw new Error(data.description || 'Telegram API error');
+        });
+      }
+    });
+  });
 }
 
 function searchProduct() {
